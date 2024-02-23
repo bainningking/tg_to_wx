@@ -1,0 +1,5 @@
+.vscode
+logs/
+.wcf.lock
+*.session
+config_dev.yml
