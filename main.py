@@ -1,3 +1,4 @@
+import os
 import sys
 import asyncio
 import socket
@@ -7,8 +8,11 @@ from pyrogram import Client
 from wcferry import Wcf
 import yaml
 import datetime
-# 读取YAML文件
-with open('config.yml', 'r') as stream:
+
+ENVIRONMENT = os.environ.get('ENVIRONMENT')
+config_yml = 'config_dev.yml' if ENVIRONMENT == 'development' else 'config.yml'
+# 读取YAML配置信息
+with open(config_yml, 'r') as stream:
     try:
         config = yaml.safe_load(stream)
 
@@ -24,8 +28,6 @@ with open('config.yml', 'r') as stream:
         print(exc)
 
 # 获取本机IP，因HDCP是动态分配IP给本机，所以代理的IP地址也会变
-
-
 def get_host_ip():
     """
     查询本机ip地址
