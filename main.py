@@ -65,8 +65,9 @@ async def tg2wx():
             async for message in app.get_chat_history(chat_id=tg_room_id, limit=1):
                     if message.date>new_msg_time:
                         try:
-                            # print(message.text)
-                            wcf.send_text(msg=message.text, receiver=wx_room_id)
+                            tg_txt = message.caption if message.caption else message.text
+                            # print(tg_txt)
+                            wcf.send_text(msg=tg_txt, receiver=wx_room_id)
                             new_msg_time = message.date
                         except Exception as e:
                             print(e)

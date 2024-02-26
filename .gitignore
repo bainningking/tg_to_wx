@@ -1,5 +1,5 @@
 .vscode
 logs/
 .wcf.lock
-*.session
+*.session*
 config_dev.yml
