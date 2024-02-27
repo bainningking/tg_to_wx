@@ -4,7 +4,7 @@ import asyncio
 import socket
 from threading import Thread
 from time import sleep
-from pyrogram import Client
+from pyrogram import Client, filters
 from wcferry import Wcf
 import yaml
 import datetime
@@ -53,26 +53,19 @@ async def get_tg_room_id():
             print(dialog.chat.id)
 
 
-async def tg2wx():
+def tg2wx():
     # 登录手机号需要加上+86
     app = Client("tg_client", api_id=api_id, api_hash=api_hash, proxy={
         'scheme': "socks5", 'hostname': proxy_ip, 'port': proxy_port})
     wcf = Wcf()
-    async with app:
-        # 通过tg账号获取消息
-        new_msg_time = datetime.datetime.now()
-        while True:
-            async for message in app.get_chat_history(chat_id=tg_room_id, limit=1):
-                    if message.date>new_msg_time:
-                        try:
-                            tg_txt = message.caption if message.caption else message.text
-                            # print(tg_txt)
-                            wcf.send_text(msg=tg_txt, receiver=wx_room_id)
-                            new_msg_time = message.date
-                        except Exception as e:
-                            print(e)
+    @app.on_message(filters.chat(tg_room_id))
+    def handle_messages(client, message):
+        tg_txt = message.caption if message.caption else message.text
+        # print(tg_txt)
+        wcf.send_text(msg=tg_txt, receiver=wx_room_id)
+    app.run()
 
-
+        
 def get_wx_room_id():
     # 获取微信群聊id
     print('请用手机向目标群聊发送群消息，通过下面输出的内容得到对应的room_id，格式为 “群聊id 群聊消息”，注意识别自己发送消息所对应的id')
@@ -100,7 +93,7 @@ def main():
     argument = sys.argv[1]
 
     if argument == "tg2wx":
-        asyncio.run(tg2wx())
+        tg2wx()
     elif argument == "get_wx_room_id":
         get_wx_room_id()
     elif argument == "get_tg_room_id":
