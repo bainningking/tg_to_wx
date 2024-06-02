@@ -30,12 +30,7 @@ ___
 命令：**python main.py get_tg_room_id**
 ![](https://cdn.jsdelivr.net/gh/bainningking/pic_repo@main/img/202402231937274.png)
 PS.首次使用需要填写验证信息，按说明来就行
-___
-目标：获取微信群聊对应的id
-
-命令：**python main.py get_wx_room_id**
-![](https://cdn.jsdelivr.net/gh/bainningking/pic_repo@main/img/202402231937277.png)
-___
+__
 目标：获取tg的api_id和api_hash
 
 命令：**python main.py api_id**
@@ -56,5 +51,7 @@ ___
 目标：自动获取tg群组/频道最新消息，并转发至微信群聊
 
 命令：**python main.py tg2wx**，窗口不要关闭
+
+等待弹出微信登录二维码登录，登录完成即可，每次程序重启都需要重新登录
 
 关闭：ctrl CCCCC

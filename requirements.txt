@@ -1,4 +1,6 @@
-pyyaml
-pyrogram
-tgcrypto
-wcferry
+requests==2.32.3
+qrcode>=7.4.2
+PyQRCode>=1.2.1
+pyrogram==2.0.106
+pyyaml==6.0.1
+TgCrypto==1.2.5
